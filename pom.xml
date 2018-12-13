@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.myself</groupId>
-    <artifactId>computer_thinking</artifactId>
+    <artifactId>MOOC</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>computer_thinking</name>
+    <name>MOOC</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
