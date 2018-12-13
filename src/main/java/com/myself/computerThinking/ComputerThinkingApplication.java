@@ -1,4 +1,4 @@
-package com.myself.computer_thinking;
+package com.myself.computerThinking;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
