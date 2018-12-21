@@ -3,13 +3,19 @@ package com.myself.computerThinking.Chapter1;
 
 public class DifferenceMethod {
     public static void main(String[] args) {
-        for (int i=0;i<100;i++){
+       /* for (int i=0;i<100;i++){
             if(differenceMethod(i)!=Math.pow(i,2)){
                 System.out.println(i+"   error");
                 return;
             }
         }
-        System.out.println("congratulation！！");
+        System.out.println("congratulation！！");*/
+        int i=10;
+         i=i^12;
+        System.out.println(i);
+        i=i^12;
+        System.out.println(i);
+        System.out.println(Integer.toString(128,2));
     }
 
     /**
