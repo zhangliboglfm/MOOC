@@ -5,6 +5,11 @@ import java.util.Stack;
 
 /**
  * 汉诺塔问题
+ *
+ *  假设有10个盘子，柱子 a,b,c
+ *  已经把前9个盘子移动到了b上面，那么只需把10号盘移动到c上，
+ *  再考虑现在有9个盘子在b上，通过a的辅助，把9好盘移动到c上面，一次类推。。。
+ *
  */
 public class HanoiTower {
     public static void print(Stack<Integer> s) {
