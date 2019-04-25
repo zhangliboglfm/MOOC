@@ -31,9 +31,14 @@ public class UserMangerProxy  implements InvocationHandler {
     public Object invoke(Object proxy, Method method, Object[] args)
             throws Throwable {
         System.out.println("start-->>");
-       /* for(int i=0;i<args.length;i++){
-            System.out.println(args[i]);
-        }*/
+        //打印方法名，参数值
+        System.out.println("The runing method name is:"+method.getName());
+        if(args!=null){
+            for(int i=0;i<args.length;i++){
+                System.out.println(args[i]);
+            }
+        }
+
         Object ret=null;
         try{
             /*原对象方法调用前处理日志信息*/
