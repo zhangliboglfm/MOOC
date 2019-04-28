@@ -62,7 +62,7 @@
 //    public void onClose() {
 ////        webSocketSet.remove(this);  //从set中删除
 //        if(webSocketServers.get(this.sid)!=null){
-//            webSocketServers.remove(this.sid);
+//            webSocketServers.get(this.sid).remove(this);
 //            subOnlineCount();           //在线数减1
 //            log.info("有一连接关闭！当前在线人数为" + getOnlineCount());
 //        }
