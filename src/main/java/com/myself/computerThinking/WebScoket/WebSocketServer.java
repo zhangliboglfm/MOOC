@@ -15,8 +15,12 @@
 //import java.util.concurrent.ConcurrentHashMap;
 //import java.util.concurrent.CopyOnWriteArraySet;
 //
+///**
+// * 使用springboot的唯一区别是要@Component声明下，而使用独立容器是由容器自己管理websocket的，但在springboot中连容器都是spring管理的。
+// * 虽然@Component默认是单例模式的，但springboot还是会为每个websocket连接初始化一个bean，所以可以用一个静态set保存起来。
+// */
 //@ServerEndpoint("/websocket/{sid}")
-//@Component
+//@Component     //此注解千万千万不要忘记，它的主要作用就是将这个监听器纳入到Spring容器中进行管理
 //public class WebSocketServer {
 //
 //    static Logger log= LoggerFactory.getLogger(WebSocketServer.class);
@@ -32,8 +36,12 @@
 //
 //    //接收sid
 //    private String sid="";
+//
 //    /**
-//     * 连接建立成功调用的方法*/
+//     * 建立连接成功的方法
+//     * @param session
+//     * @param sid
+//     */
 //    @OnOpen
 //    public void onOpen(Session session,@PathParam("sid") String sid) {
 //        this.session = session;
@@ -71,8 +79,9 @@
 //
 //    /**
 //     * 收到客户端消息后调用的方法
+//     * @param message 客户端发送过来的消息
 //     *
-//     * @param message 客户端发送过来的消息*/
+//     */
 //    @OnMessage
 //    public void onMessage(String message, Session session) {
 //        log.info("收到来自窗口"+sid+"的信息:"+message);
@@ -101,6 +110,7 @@
 //        log.error("发生错误");
 //        error.printStackTrace();
 //    }
+//
 //    /**
 //     * 实现服务器主动推送
 //     */
