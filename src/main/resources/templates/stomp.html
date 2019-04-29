@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>接受消息</title>
+</head>
+<body>
+
+</body>
+
+<!--<script type="text/javascript" th:src="@{../static/js/jquery.min.js}" ></script>
+<script type="text/javascript" th:src="@{../static/js/sockjs.min.js}" ></script>
+<script type="text/javascript" th:src="@{../static/js/stomp.js}" ></script>-->
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/sockjs.min.js"></script>
+<script src="/static/js/stomp.js"></script>
+
+<script th:inline="javascript">
+    var url=getUrl();
+    console.log(url);
+    var  socket = new SockJS(url);   //WebSocket对应的地址
+    stompClient = Stomp.over(socket);
+    var headers={
+        username:'admin',
+        password:'admin'
+    };
+    stompClient.connect(headers, function (frame) {
+        console.log('Connected: ' + frame);
+        //订阅AAA频道
+        stompClient.subscribe('/topic/AAA', function (greeting) {
+            //后台传过来的json字符串转换为json对象
+            console.log("AAA"+greeting);
+        });
+        //订阅BBB频道
+        stompClient.subscribe('/topic/BBB', function (greeting) {
+            //后台传过来的json字符串转换为json对象
+            console.log("BBB"+greeting);
+            //处理并显示数据
+        });
+        //订阅BBB频道
+        stompClient.subscribe('/topic/CCC', function (greeting) {
+            //后台传过来的json字符串转换为json对象
+            console.log("CCC"+greeting);
+            //处理并显示数据
+        });
+    });
+
+    //获取项目路径
+    function getUrl() {
+        var strFullPath=window.document.location.href;
+        var strPath=window.document.location.pathname;
+        var pos=strFullPath.indexOf(strPath);
+        var prePath=strFullPath.substring(0,pos);
+        var postPath=strPath.substring(0,strPath.substr(1).indexOf('/')+1);
+        var basePath = prePath+postPath;
+        var url=basePath+"//websocket/socketServer.action";
+        return url
+    }
+</script>
+</html>
