@@ -35,12 +35,5 @@ public class TaskServiceImpl implements TaskService {
         simpMessagingTemplate.convertAndSend(Const.Channel.BBB_CHANNEL.getName(), "456");
     }
 
-    @MessageMapping("/welcom")
-    @SendTo("/topic/BBB")
-    public String sendMessage(String message) {
-        logger.info("=====================CCC频道每30秒执行一次刷新=====================");
-        return message;
-    }
-
 
 }
