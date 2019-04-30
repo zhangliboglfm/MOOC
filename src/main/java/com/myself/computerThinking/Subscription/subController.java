@@ -13,7 +13,7 @@ import java.util.Map;
 public class subController {
 
     @RequestMapping(value = "/stomp")
-    public String getStopm(){
+    public String getStomp(){
         return "stomp";
     }
 
