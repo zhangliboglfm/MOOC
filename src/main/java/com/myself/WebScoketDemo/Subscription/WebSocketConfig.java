@@ -1,4 +1,4 @@
-package com.myself.computerThinking.Subscription;
+package com.myself.WebScoketDemo.Subscription;
 
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.stereotype.Component;

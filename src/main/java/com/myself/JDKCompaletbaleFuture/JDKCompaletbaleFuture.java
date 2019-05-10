@@ -1,4 +1,4 @@
-package com.myself.computerThinking.JDKCompaletbaleFuture;
+package com.myself.JDKCompaletbaleFuture;
 
 import org.junit.Test;
 

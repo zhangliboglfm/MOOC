@@ -1,4 +1,4 @@
-package com.myself.computerThinking.dynamicProxy;
+package com.myself.ProxyDemo.staticProxy;
 
 /**
  * 用户管理

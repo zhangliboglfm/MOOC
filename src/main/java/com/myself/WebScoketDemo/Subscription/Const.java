@@ -1,4 +1,4 @@
-package com.myself.computerThinking.Subscription;
+package com.myself.WebScoketDemo.Subscription;
 
 public class Const {
     /**

@@ -1,4 +1,4 @@
-package com.myself.computerThinking.Chapter1;
+package com.myself.Chapter1;
 
 
 import java.util.Arrays;
