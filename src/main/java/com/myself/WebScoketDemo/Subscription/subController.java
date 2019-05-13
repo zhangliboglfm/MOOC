@@ -1,4 +1,4 @@
-package com.myself.computerThinking.Subscription;
+package com.myself.WebScoketDemo.Subscription;
 
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Headers;

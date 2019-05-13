@@ -1,4 +1,4 @@
-package com.myself.computerThinking.CglibProxy;
+package com.myself.ProxyDemo.CglibProxy;
 
 /**
  *用户管理实现类

@@ -1,4 +1,4 @@
-package com.myself.computerThinking.CglibProxy;
+package com.myself.ProxyDemo.CglibProxy;
 
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.MethodInterceptor;

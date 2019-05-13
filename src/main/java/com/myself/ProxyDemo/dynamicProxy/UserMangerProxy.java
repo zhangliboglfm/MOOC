@@ -1,4 +1,4 @@
-package com.myself.computerThinking.dynamicProxy;
+package com.myself.ProxyDemo.dynamicProxy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

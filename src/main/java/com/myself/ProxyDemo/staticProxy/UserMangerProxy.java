@@ -1,4 +1,4 @@
-package com.myself.computerThinking.staticProxy;
+package com.myself.ProxyDemo.staticProxy;
 
 /**
  * 静态代理类
