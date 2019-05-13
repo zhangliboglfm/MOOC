@@ -1,8 +1,15 @@
 package com.myself.JvmMomeory;
 
+import java.io.IOException;
+
 public class JvmDemo {
 
     public static void main(String[] args) {
+        try {
+            System.in.read();
+        }catch (IOException e){
+
+        }
         // https://www.cnblogs.com/a-small-lyf/p/10280091.html
         //为JVM的最大可用内存，可通过-Xmx设置，默认值为物理内存的1/4，设值不能高于计算机物理内存；
         System.out.println(mb(Runtime.getRuntime().maxMemory()));
