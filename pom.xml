@@ -168,6 +168,33 @@
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>kernel</artifactId>
+            <version>7.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>io</artifactId>
+            <version>7.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>layout</artifactId>
+            <version>7.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>font-asian</artifactId>
+            <version>7.0.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.xhtmlrenderer</groupId>
+            <artifactId>core-renderer</artifactId>
+            <version>R8</version>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>
