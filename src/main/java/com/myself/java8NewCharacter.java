@@ -13,7 +13,7 @@ public class java8NewCharacter {
 
 
     /**
-     * 命令是编程：  tell what and how, 例如自己控制for循环遍历list查看是否包含某个元素
+     * 命令式编程：  tell what and how, 例如自己控制for循环遍历list查看是否包含某个元素
      *
      * 声明式编程： tell what, 知道查找list的某个元素，扫描底层jdk库，可以调用contains方法,编程更加简便高效
      *
