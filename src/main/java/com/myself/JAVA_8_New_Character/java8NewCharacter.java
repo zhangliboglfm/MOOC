@@ -150,9 +150,25 @@ public class java8NewCharacter {
             return Integer.sum(total,e);
         }));
         System.out.println(integerList.stream().reduce(0,Integer::sum));
-
     }
 
 
+    /**
+     * 函数式接口    https://www.ibm.com/developerworks/cn/java/j-java8idioms7/index.html?ca=drs-
+     * 函数接口的3条重要规则：
+     *      1.一个函数接口只有一个抽象方法。
+     *      2.在 Object 类中属于公共方法的抽象方法不会被视为单一抽象方法。
+     *      3.函数接口可以有默认方法和静态方法。
+     *
+     */
+    @Test
+    public void  functionalInterface(){
+
+        Thread thread =new Thread(()-> System.out.println(123));
+        thread.start();
+        String thirdOrderNo ="HT-2c948a856b21c87c016b2551a9880002";
+        String header =thirdOrderNo.substring(0,3);
+        String id =thirdOrderNo.substring(3);
+    }
 
 }
