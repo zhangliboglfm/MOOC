@@ -173,7 +173,6 @@ public class java8NewCharacter {
         new java8NewCharacter().borrowCar(car -> System.out.println("using " + car));
     }
 
-
     public void borrowCar(Consumer<Car> carConsumer){
         Car car = new Car("Jeep", "Wrangler", 2011);
         System.out.println(car);
@@ -184,5 +183,22 @@ public class java8NewCharacter {
         }
     }
 
+    /**
+     * https://www.ibm.com/developerworks/cn/java/j-java8idioms8/index.html?ca=drs-
+     * createComparator1  createComparator2  java 1.8 类型推断的局限性
+     * @return
+     */
+    public static Comparator<Car> createComparator1(){
+        // 根据返回值得类型来推断car的类型
+        return Comparator.comparing(car -> car.getYear());
+    }
+    public static Comparator<Car> createComparator2(){
+        //推断不出 car的类型
+//        return Comparator.comparing(car -> car.getYear()).reversed();
+        //引入显示类型来确定参数类型
+//        return Comparator.comparing((Car car) -> car.getYear()).reversed();
+        // 使用方法引用
+        return Comparator.comparing(Car::getYear).reversed();
+    }
 
 }
