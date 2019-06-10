@@ -1,5 +1,6 @@
 package com.myself.JAVA_8_New_Character;
 
+import com.aliyun.mns.sample.Sample;
 import com.myself.JAVA_8_New_Character.extraUtil.Car;
 import org.apache.coyote.http2.Stream;
 import org.junit.Test;
@@ -8,6 +9,8 @@ import java.util.*;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -164,11 +167,22 @@ public class java8NewCharacter {
     @Test
     public void  functionalInterface(){
 
-        Thread thread =new Thread(()-> System.out.println(123));
-        thread.start();
-        String thirdOrderNo ="HT-2c948a856b21c87c016b2551a9880002";
-        String header =thirdOrderNo.substring(0,3);
-        String id =thirdOrderNo.substring(3);
+        /*Thread thread =new Thread(()-> System.out.println(123));
+        thread.start();*/
+
+        new java8NewCharacter().borrowCar(car -> System.out.println("using " + car));
     }
+
+
+    public void borrowCar(Consumer<Car> carConsumer){
+        Car car = new Car("Jeep", "Wrangler", 2011);
+        System.out.println(car);
+        try {
+            carConsumer.accept(car);
+        }finally {
+            System.out.println(car);
+        }
+    }
+
 
 }
