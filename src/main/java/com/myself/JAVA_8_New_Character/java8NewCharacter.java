@@ -10,6 +10,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -64,10 +65,10 @@ public class java8NewCharacter {
             });
         }
 
-        // computeIfAbsent  若key->"12" 对应的value为空，会将第二个参数的返回值存入并返回
+        // computeIfAbsent  若key 对应的value为空，会将第二个参数的返回值存入并返回
         int key2 = linkedHashMap.computeIfAbsent("ag1", k ->4 );
 
-        // computeIfAbsent  若key->"12" 对应的value为空，会将第二个参数的返回值存入并返回
+        // computeIfAbsent  若key 对应的value不为空，会将第二个参数的返回值存入并返回
         int key3 = linkedHashMap.computeIfPresent("ag1", (k,v) -> v+1);
         System.out.println(key3);
 
@@ -201,4 +202,140 @@ public class java8NewCharacter {
         return Comparator.comparing(Car::getYear).reversed();
     }
 
+    /**
+     *   https://www.ibm.com/developerworks/cn/java/j-java8idioms9/index.html?ca=drs-
+     *   级联lambda表达式
+     *   IntStream() 应用.collect() 需要调用boxed() 去自动装箱
+     */
+    static Function<Integer, Predicate<Integer>> isGreaterThan = (Integer pivot) -> {
+        Predicate<Integer> isGreaterThanPivot = (Integer candidate) -> {
+            return candidate > pivot;
+        };
+        return isGreaterThanPivot;
+    };
+
+    //第一次简化  删除类型细节
+    static Function<Integer, Predicate<Integer>> isGreaterThan1 =  pivot -> {
+        Predicate<Integer> isGreaterThanPivot = candidate -> {
+            return candidate > pivot;
+        };
+        return isGreaterThanPivot;
+    };
+    //第二次简化  删除多余的()以及参数引用
+    static Function<Integer, Predicate<Integer>> isGreaterThan2 =  pivot -> {
+        return  candidate -> {
+            return candidate > pivot;
+        };
+    };
+    //第三次简化  删除{}和return 变成级联lambda表达式
+    static Function<Integer, Predicate<Integer>> isGreaterThan3 =  pivot -> {
+        return  candidate ->candidate > pivot;
+    };
+
+
+    public void testHiger(){
+        List<Integer> valuesOver25 = Arrays.asList(1,2,3,4,6,10).stream()
+                .filter(isGreaterThan.apply(5))
+                .collect(Collectors.toList());
+    }
+
+    @Test
+    public  void testBoxed() {
+        List<Integer> valuesOver25 = IntStream.range(1,50)
+                .filter(num->num>10)
+                .boxed()
+                .collect(Collectors.toList());
+    }
+
+
+    /**
+     * https://www.ibm.com/developerworks/cn/java/j-java8idioms10/index.html?ca=drs-
+     * 使用闭包捕获状态
+     *  lambda 表达式，
+     */
+    @Test
+    public  void print() {
+        String location = "World";
+
+        Runnable runnable = new Runnable() {
+            public void run() {
+                System.out.println("Hello " + location);
+            }
+        };
+
+        runnable.run();
+
+        Runnable runnable1 = ()-> System.out.println("Hello " + location);
+        runnable1.run();
+    }
+
+    public static void call(Runnable runnable) {
+        System.out.println("calling runnable");
+        //level 2 of stack
+        runnable.run();
+    }
+
+    public static void main(String[] args) {
+        int value = 4;  //level 1 of stack
+        call(
+                () -> System.out.println(value) //level 3 of stack
+        );
+
+
+        Runnable runnable = create();
+
+        System.out.println("In main");
+        runnable.run();
+
+    }
+
+    public static Runnable create() {
+        int value = 4;
+        Runnable runnable = () -> System.out.println(value);
+
+        System.out.println("exiting create");
+        return runnable;
+    }
+
+
+    /**
+     * 函数的纯度规则：
+     *      1.函数不会更改任何元素。
+     *      2.函数不依赖于任何可能更改的元素。
+     */
+    @Test
+    public void getList(){
+        System.out.println(handlList(Arrays.asList(1,3,5,6,8,9),10));
+
+        List<Integer> numbers = Arrays.asList(2, 5, 8, 15, 12, 19, 50, 23);
+        System.out.println(
+                numbers.stream()
+                        .filter(e -> e > 10)
+                        .filter(e -> e % 2 == 0)
+                        .map(e -> e * 2)
+                        .findFirst()
+                        .map(e -> "The value is " + e)
+                        .orElse("No value found"));
+
+        //peek 方法对调试很有用，使我们能在执行期间留意到Stream
+        //该代码处理了直到 12（包含 12）的所有值，但它没有触及超过目标值的任何值。
+        // 这是因为最终操作 findFirst 会触发流处理的终止。此外，两个 filter 和 map 调用中的操作融合在一起，
+        // 然后在序列中的每个元素上执行计算。超过 findFirst 中的内部终止信号后，就不会再计算元素。
+        System.out.println(
+                numbers.stream()
+                        .peek(e -> System.out.println("processing " + e))
+                        .filter(e -> e > 10)
+                        .filter(e -> e % 2 == 0)
+                        .map(e -> e * 2)
+                        .findFirst()
+                        .map(e -> "The value is " + e)
+                        .orElse("No value found"));
+    }
+
+    public List<Integer> handlList(List<Integer> list,int multi){
+
+        return list.stream().filter(num->num>=3)
+                .map(num->num*multi)
+                .collect(Collectors.toList());
+    }
 }
