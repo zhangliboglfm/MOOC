@@ -66,7 +66,10 @@ public class java8NewCharacter {
         }
 
         // computeIfAbsent  若key 对应的value为空，会将第二个参数的返回值存入并返回
-        int key2 = linkedHashMap.computeIfAbsent("ag1", k ->4 );
+        int key2 = linkedHashMap.computeIfAbsent("ag1", k->{
+            System.out.println("***********"+k);
+            return 4;
+        } );
 
         // computeIfAbsent  若key 对应的value不为空，会将第二个参数的返回值存入并返回
         int key3 = linkedHashMap.computeIfPresent("ag1", (k,v) -> v+1);
@@ -186,6 +189,7 @@ public class java8NewCharacter {
 
     /**
      * https://www.ibm.com/developerworks/cn/java/j-java8idioms8/index.html?ca=drs-
+     *
      * createComparator1  createComparator2  java 1.8 类型推断的局限性
      * @return
      */
@@ -232,7 +236,7 @@ public class java8NewCharacter {
         return  candidate ->candidate > pivot;
     };
 
-
+    @Test
     public void testHiger(){
         List<Integer> valuesOver25 = Arrays.asList(1,2,3,4,6,10).stream()
                 .filter(isGreaterThan.apply(5))
