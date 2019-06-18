@@ -39,6 +39,8 @@ public class Java8Optional {
     @Test(expected = NoSuchElementException.class)
     public  void createOptional(){
         Optional<Car> optionalCar = Optional.of(  new Car("Jeep", "Wrangler", 2011));
+        System.out.println(optionalCar.map(car -> { car.setYear(1998);return "abc";}));
+        System.out.println(optionalCar.get().getYear());  // 1998
         System.out.println(optionalCar.get());
         optionalCar.ifPresent(car -> System.out.println(car.getYear()));
         Optional<Car> emptyOpt = Optional.empty();
