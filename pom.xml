@@ -89,6 +89,12 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.esotericsoftware</groupId>
+            <artifactId>reflectasm</artifactId>
+            <version>1.11.0</version>
+        </dependency>
+
         <!--  open seach  -->
         <dependency>
             <groupId>com.aliyun.opensearch</groupId>
