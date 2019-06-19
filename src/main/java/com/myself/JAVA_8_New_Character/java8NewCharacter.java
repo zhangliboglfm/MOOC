@@ -352,9 +352,21 @@ public class java8NewCharacter {
      *      << 表示左移，低位补0                                乘以2*n
      *      左移没有<<<运算符
      *
+     *
+     *  BitSet的使用：
+     *      https://my.oschina.net/cloudcoder/blog/294810
+     *      https://www.cnblogs.com/yellowb/p/3647442.html
+     *
      */
     @Test
     public void shiftOperation(){
+
+        System.out.println(Long.toBinaryString(0x8000000000000000L));
+        getMask(0);
+        getMask(1);
+        getMask(2);
+        System.out.println(Long.toBinaryString(0xFFFFFFFFFFFFFFFFL));
+        System.out.println(Long.toBinaryString(0xFFFFFFFFFFFFFFFFL));
         int num =64;
         printInfo(num<<2);
         printInfo(num>>2);
@@ -364,5 +376,13 @@ public class java8NewCharacter {
         System.out.println(Integer.toBinaryString(num));
     }
 
+
+    private long getMask(int index){
+        long rootMask =0xFFFFFFFFFFFFFFFFL;
+        long rootMask1=rootMask>>>(index);
+        rootMask1 &= rootMask<<(64-index-1);
+        System.out.println(Long.toBinaryString(rootMask1));
+        return rootMask;
+    }
 
 }
