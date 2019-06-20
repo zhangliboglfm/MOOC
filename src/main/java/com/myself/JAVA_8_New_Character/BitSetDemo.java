@@ -29,26 +29,35 @@ public class BitSetDemo {
      *      移位操作：>> 和 <<
      *          int 数据类型移动 num位 == (num % 32)位
      *          double 数据类型移动 num位 == (num % 64)位
+     *
+     *
+     *      numberOfLeadingZeros() 利用移位操作，
+     *              返回无符号整型i的最高非零位前面的0的个数，包括符号位在内；
+     *              如果i为负数，这个方法将会返回0，符号位为1.
      */
     @Test
     public void shiftOperation(){
 
-        System.out.println(Long.toBinaryString(0x8000000000000000L));
+        /*System.out.println(Long.toBinaryString(0x8000000000000000L));
         getMask(0);
         getMask(1);
-        getMask(2);
-        System.out.println(Long.toBinaryString(0xFFFFFFFFFFFFFFFFL));
-        System.out.println(Long.toBinaryString(0xFFFFFFFFFFFFFFFFL));
-        int num =64;
+        getMask(2);*/
+        System.out.println(Long.toBinaryString(0xFFFFFFFFFFFFFFFFL<<3));
+        System.out.println(Long.toBinaryString(0xFFFFFFFFFFFFFFFFL>>>-7));
+        /*int num =64;
         printInfo(num<<2);
         printInfo(num>>2);
-        printInfo(num>>>2);
+        printInfo(num>>>2);*/
     }
     private void printInfo(int num){
         System.out.println(Integer.toBinaryString(num));
     }
 
-
+    /**
+     * 求解掩码，  1l << index
+     * @param index
+     * @return
+     */
     private long getMask(int index){
         long rootMask =0xFFFFFFFFFFFFFFFFL;
         long rootMask1=rootMask>>>(index);
@@ -57,6 +66,22 @@ public class BitSetDemo {
         return rootMask;
     }
 
+
+    @Test
+    public void testBitSet(){
+        System.out.println(Long.toBinaryString(1L<<2));
+        BitSet bitSet = new BitSet();
+        bitSet.set(1);
+        bitSet.set(2);
+        System.out.println(bitSet.get(2));
+        bitSet.flip(2);
+        System.out.println(bitSet.get(2));
+        /*
+        System.out.println(bitSet.get(2));
+        bitSet.clear(0,3);
+        System.out.println(bitSet.get(2));*/
+
+    }
 
     /**
      * 求一个字符串包含的char
