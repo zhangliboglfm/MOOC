@@ -3,14 +3,19 @@ package com.myself.JAVA_8_New_Character;
 import org.junit.Test;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.*;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
  * jdk 1.8 Stream 操作
  *
  * https://www.ibm.com/developerworks/cn/java/j-lo-java8streamapi/
+ *
+ *
+ *
  */
 public class Java8Stream {
 
@@ -34,6 +39,13 @@ public class Java8Stream {
      */
     @Test
     public void  createStream(){
+        Random seed = new Random();
+        Supplier<Integer> random = seed::nextInt;
+        Stream.generate(random).limit(10).forEach(System.out::println);
+        //Another way
+        IntStream.generate(() -> (int) (System.nanoTime() % 100)).
+                limit(10).forEach(System.out::println);
+
 
     }
 
@@ -60,7 +72,175 @@ public class Java8Stream {
      *          （anyMatch、 allMatch、 noneMatch、 findFirst、 findAny、 limit）
      */
     @Test
-    public void  streamOperate(){
+    public void  operate(){
 
+    }
+
+    /**
+     *
+     * forEach 是 terminal 操作，因此它执行后，Stream 的元素就被“消费”掉了，你无法对一个 Stream 进行两次 terminal 运算
+     *
+     * 具有相似功能的 intermediate 操作 peek 可以达到上述目的。
+     */
+    @Test
+    public void peekOrForEach(){
+        Stream.of("one", "two", "three", "four")
+                .filter(e -> e.length() > 3)
+                .peek(e -> System.out.println("Filtered value: " + e))
+                /*.forEach(e -> System.out.println("Filtered value: " + e))*/
+                .map(String::toUpperCase)
+                .peek(e -> System.out.println("Mapped value: " + e))
+                .collect(Collectors.toList());
+
+    }
+
+
+    /**
+     * reduce 操作：
+     *
+     */
+    @Test
+    private void reduceOperate(){
+        // 字符串连接，concat = "ABCD"
+        String concat = Stream.of("A", "B", "C", "D").reduce("", String::concat);
+        // 求最小值，minValue = -3.0
+        double minValue = Stream.of(-1.5, 1.0, -3.0, -2.0).reduce(Double.MAX_VALUE, Double::min);
+        // 求和，sumValue = 10, 有起始值
+        int sumValue = Stream.of(1, 2, 3, 4).reduce(0, Integer::sum);
+        // 求和，sumValue = 10, 无起始值
+        sumValue = Stream.of(1, 2, 3, 4).reduce(Integer::sum).get();
+        // 过滤，字符串连接，concat = "ace"
+        concat = Stream.of("a", "B", "c", "D", "e", "F").
+                filter(x -> x.compareTo("Z") > 0).
+                reduce("", String::concat);
+    }
+
+    /**
+     * limit 返回 Stream 的前面 n 个元素；skip 则是扔掉前 n 个元素（它是由一个叫 subStream 的方法改名而来）
+     *
+     *  ① 用在 limit(n) 前面时，先去除前 m 个元素再返回剩余元素的前 n 个元素
+     *  ② limit(n) 用在 skip(m) 前面时，先返回前 n 个元素再在剩余的 n 个元素中去除 m 个元素
+     *
+     *
+     * limit 和 skip 对 sorted 后的运行次数无影响
+     *
+     * 最后有一点需要注意的是，对一个 parallel 的 Steam 管道来说，如果其元素是有序的，那么 limit 操作的成本会比较大，
+     * 因为它的返回对象必须是前 n 个也有一样次序的元素。取而代之的策略是取消元素间的次序，或者不要用 parallel Stream。
+     */
+    @Test
+    public void skipAndLimit(){
+        List<Person> persons = new ArrayList();
+        for (int i = 1; i <= 5; i++) {
+            Person person = new Person(i, "name" + i);
+            persons.add(person);
+        }
+        List<Person> personList2 = persons.stream().sorted((p1, p2) ->
+                p1.getName().compareTo(p2.getName())).limit(2).collect(Collectors.toList());
+        System.out.println(personList2);
+    }
+
+    /**
+     * min 和 max 的功能也可以通过对 Stream 元素先排序，再 findFirst 来实现，但前者的性能会更好，为 O(n)，
+     * 而 sorted 的成本是 O(n log n)。同时它们作为特殊的 reduce 方法被独立出来也是因为求最大最小值是很常见的操作。
+     *
+     * distinct 来找出不重复的单词
+     *
+     *  allMatch：Stream 中全部元素符合传入的 predicate，返回 true
+     *  anyMatch：Stream 中只要有一个元素符合传入的 predicate，返回 true
+     *  noneMatch：Stream 中没有一个元素符合传入的 predicate，返回 true
+     *
+     */
+    @Test
+    public void handle()throws Exception{
+        //找出最长一行的长度
+        BufferedReader br = new BufferedReader(new FileReader("c:\\SUService.log"));
+        int longest = br.lines().
+                mapToInt(String::length).
+                max().
+                getAsInt();
+        System.out.println(longest);
+
+        //使用 distinct 来找出不重复的单词
+        List<String> words = br.lines().
+                flatMap(line -> Stream.of(line.split(" "))).
+                filter(word -> word.length() > 0).
+                map(String::toLowerCase).
+                distinct().
+                sorted().
+                collect(Collectors.toList());
+        br.close();
+        System.out.println(words);
+
+    }
+
+
+    public void groupOrParting(){
+
+        Map<Integer, List<Person>> personGroups = Stream.generate(new PersonSupplier()).
+                limit(100).
+                collect(Collectors.groupingBy(Person::getAge));
+        Iterator it = personGroups.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<Integer, List<Person>> persons = (Map.Entry) it.next();
+            System.out.println("Age " + persons.getKey() + " = " + persons.getValue().size());
+        }
+
+
+        Map<Boolean, List<Person>> children = Stream.generate(new PersonSupplier()).
+                limit(100).
+                collect(Collectors.partitioningBy(p -> p.getAge() < 18));
+        System.out.println("Children number: " + children.get(true).size());
+        System.out.println("Adult number: " + children.get(false).size());
+    }
+
+}
+
+class Person{
+
+    int age;
+    String name;
+    int random;
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getRandom() {
+        return random;
+    }
+
+    public void setRandom(int random) {
+        this.random = random;
+    }
+
+    public Person(int age, String name, int random) {
+        this.age = age;
+        this.name = name;
+        this.random = random;
+    }
+    public Person(int age, String name) {
+        this.age = age;
+        this.name = name;
+    }
+}
+
+ class PersonSupplier implements Supplier<Person> {
+    private int index = 0;
+    private Random random = new Random();
+    @Override
+    public Person get() {
+        return new Person(index++, "StormTestUser" + index, random.nextInt(100));
     }
 }
