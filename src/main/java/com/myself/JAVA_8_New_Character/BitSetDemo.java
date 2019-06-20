@@ -12,6 +12,7 @@ import java.util.BitSet;
  *
  *  使用场景：https://my.oschina.net/cloudcoder/blog/294810
  *
+ *  bitSet面试题：https://www.cnblogs.com/yellowb/p/3647442.html
  *
  */
 public class BitSetDemo {
@@ -19,6 +20,7 @@ public class BitSetDemo {
 
     /**
      *  https://blog.csdn.net/blog_szhao/article/details/23997881
+     *
      *  移位运算：  <<, >>,>>>
      *      >> 表示右移，如果该数为正，则高位补0，若为负数，则高位补1         除以2*n
      *      >>>表示无符号右移，也叫逻辑右移，即若该数为正，则高位补0，而若该数为负数，则右移后高位同样补0。
