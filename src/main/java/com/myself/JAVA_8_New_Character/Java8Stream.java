@@ -14,6 +14,8 @@ import java.util.stream.Stream;
  *
  * https://www.ibm.com/developerworks/cn/java/j-lo-java8streamapi/
  *
+ * 简单快速的处理Stream()
+ *      https://www.jianshu.com/p/0bb4daf6c800
  *
  *
  */
