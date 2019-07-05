@@ -72,6 +72,9 @@ public class Java8Stream {
      *          对于一个 intermediate 操作，如果它接受的是一个无限大（infinite/unbounded）的 Stream，但返回一个有限的新 Stream。
      *          对于一个 terminal 操作，如果它接受的是一个无限大的 Stream，但能在有限的时间计算出结果。
      *          （anyMatch、 allMatch、 noneMatch、 findFirst、 findAny、 limit）
+     *              findAny()：找到其中一个元素 （使用 stream() 时找到的是第一个元素；使用 parallelStream() 并行时找到的是其中一个元素）
+     *              findFirst()：找到第一个元素
+     *
      */
     @Test
     public void  operate(){
@@ -145,7 +148,7 @@ public class Java8Stream {
      * min 和 max 的功能也可以通过对 Stream 元素先排序，再 findFirst 来实现，但前者的性能会更好，为 O(n)，
      * 而 sorted 的成本是 O(n log n)。同时它们作为特殊的 reduce 方法被独立出来也是因为求最大最小值是很常见的操作。
      *
-     * distinct 来找出不重复的单词
+     * distinct 来找出不重复的单词  通过调用类的equals方法来判断两个元素是否相等的。
      *
      *  allMatch：Stream 中全部元素符合传入的 predicate，返回 true
      *  anyMatch：Stream 中只要有一个元素符合传入的 predicate，返回 true
