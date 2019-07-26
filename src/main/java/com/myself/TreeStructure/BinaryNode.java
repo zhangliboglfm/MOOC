@@ -106,6 +106,7 @@ public class BinaryNode<K extends Comparable,V> {
                 // 左右子树都存在的情况
                 if(tree.left!=null&&tree.right!=null){
                     findMin(tree.right).left=tree.left;
+                    tree.left=null;
                 }else {
                     tree =tree.left==null?tree.right:tree.left;
                 }
