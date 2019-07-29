@@ -86,29 +86,49 @@ public class BinaryNode<K extends Comparable,V> {
     }
 
 
-    public void remove(K key,V value,BinaryNode<K,V> tree){
+    /**
+     * 删除有三种情况：
+     *      ①：若没有子节点，直接删除
+     *      ②：只有一个子节点，将子节点直接指向其父节点
+     *      ③：有两个节点：寻找出右分支的最小值与它替换，并删除右分支的最小值
+     * @param key
+     * @param value
+     * @param tree
+     * @param parent
+     * @return
+     */
+    public void remove(K key,V value,BinaryNode<K,V> tree,BinaryNode<K,V> parent,boolean deleteAll){
         if(tree==null){
             return ;
         }
         // 左子树
         if(key.compareTo(tree.key)<0)
-            remove(key,value,tree.left);
+            remove(key,value,tree.left,tree,false);
         // 右子树
         if(key.compareTo(tree.key)>0)
-            remove(key,value,tree.right);
+            remove(key,value,tree.right,tree,false);
         // 相等的情况
         if(key.compareTo(tree.key)==0){
             // 判断HashSet是否有多个值
-            if(tree.attach.size()>1){
+            if(tree.attach.size()>1&&!deleteAll){
                 // 惰性删除
                 tree.attach.remove(value);
             }else {
                 // 左右子树都存在的情况
                 if(tree.left!=null&&tree.right!=null){
-                    findMin(tree.right).left=tree.left;
-                    tree.left=null;
+                    //根据二叉树的中顺遍历，需要找到”有子树“的最小节点
+                    BinaryNode<K,V> leftMin=findMin(tree.right);
+                    tree.key = leftMin.key;
+                    tree.attach=leftMin.attach;
+                    //删除右子树的指定元素
+                     remove(leftMin.key, value,tree.right, tree,true);
                 }else {
-                    tree =tree.left==null?tree.right:tree.left;
+                    if(parent.left.key.compareTo(tree.key)==0){
+                        parent.left=tree.left!=null?tree.left:tree.right;
+                    }else {
+                        parent.right=tree.left!=null?tree.left:tree.right;
+                    }
+
                 }
             }
         }
@@ -126,16 +146,60 @@ public class BinaryNode<K extends Comparable,V> {
         }
     }
 
+    /**
+     * 前序遍历
+     * @param tree
+     */
+    public void headSortIterator(BinaryNode<K,V> tree){
+        if(tree==null){
+            return;
+        }
+        System.out.print(tree.attach.iterator().next()+",  ");
+        headSortIterator(tree.left);
+        headSortIterator(tree.right);
+
+    }
+    /**
+     * 中序遍历
+     * @param tree
+     */
+    public void midSortIterator(BinaryNode<K,V> tree){
+        if(tree==null){
+            return;
+        }
+        midSortIterator(tree.left);
+        System.out.print(tree.attach.iterator().next()+",  ");
+        midSortIterator(tree.right);
+
+    }
+    /**
+     * 后序遍历
+     * @param tree
+     */
+    public void tailSortIterator(BinaryNode<K,V> tree){
+        if(tree==null){
+            return;
+        }
+        tailSortIterator(tree.left);
+        tailSortIterator(tree.right);
+        System.out.print(tree.attach.iterator().next()+",  ");
+
+    }
 
     public static void main(String[] args) {
+
+
+        HashSet hashSet= new HashSet();
+        hashSet.size();
         int [] nums = {20,16,15,18,17,19,25,24,30};
         BinaryNode<Student,Integer> tree=new BinaryNode<>();
         for (int i=0;i<nums.length;i++){
           tree=tree.Add(new Student("name"+i,nums[i]),nums[i],tree);
         }
+
+        tree.headSortIterator(tree);
         BinaryNode minNode= tree.findMin(tree);
-        tree.remove(new Student("",15),15,tree);
-        System.out.println(123);
+        tree.remove(new Student("",16),16,tree,null,false);
 
     }
 
