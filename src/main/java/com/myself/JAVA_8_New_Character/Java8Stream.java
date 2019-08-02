@@ -1,10 +1,12 @@
 package com.myself.JAVA_8_New_Character;
 
+import org.assertj.core.util.Lists;
 import org.junit.Test;
 
 import java.io.*;
 import java.util.*;
 import java.util.function.Supplier;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -105,7 +107,7 @@ public class Java8Stream {
      *
      */
     @Test
-    private void reduceOperate(){
+    public void reduceOperate(){
         // 字符串连接，concat = "ABCD"
         String concat = Stream.of("A", "B", "C", "D").reduce("", String::concat);
         // 求最小值，minValue = -3.0
@@ -179,6 +181,11 @@ public class Java8Stream {
     }
 
 
+    /**
+     *  groupingBy: 分组
+     *
+     *  partitoningBy: 以什么为条件分割
+     */
     public void groupOrParting(){
 
         Map<Integer, List<Person>> personGroups = Stream.generate(new PersonSupplier()).
@@ -197,6 +204,36 @@ public class Java8Stream {
         System.out.println("Children number: " + children.get(true).size());
         System.out.println("Adult number: " + children.get(false).size());
     }
+
+
+    /**
+     * 测试Collectors.tomap();
+     *
+     *  如果有重复的key会报错：Duplicate key **
+     *
+     *  如果value值为空会报错：NullPointException
+     *
+     *  https://blog.csdn.net/stone_yw/article/details/87297937
+     */
+    @Test
+    public void listToMap(){
+        List<Person> personList = Lists.newArrayList(
+                new Person(10,"zhang1"),
+                new Person(10,"zhang2"),
+                new Person(12,"zhang3"),
+                new Person(13,"zhang5"),
+                new Person(14,null)
+        );
+
+        //System.out.println(personList.stream().collect(Collectors.toMap(Person::getAge,Person::getName,(v1,v2)->v2)));// 对应key=10,v1= zhang1 v2=zhang2
+
+       LinkedHashMap memberMap = personList.stream().collect(LinkedHashMap::new, (m, v) ->
+                m.put(v.getAge(), v.getName()), LinkedHashMap::putAll);
+        System.out.println(memberMap);
+
+
+    }
+
 
 }
 
