@@ -1,5 +1,6 @@
 package com.myself.JAVA_8_New_Character;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 
@@ -225,7 +226,7 @@ public class Java8Stream {
                 new Person(14,null)
         );
 
-        //System.out.println(personList.stream().collect(Collectors.toMap(Person::getAge,Person::getName,(v1,v2)->v2)));// 对应key=10,v1= zhang1 v2=zhang2
+        System.out.println(personList.stream().collect(Collectors.toMap(Person::getAge,Person::getName,(v1,v2)->v2)));// 对应key=10,v1= zhang1 v2=zhang2
 
        LinkedHashMap memberMap = personList.stream().collect(LinkedHashMap::new, (m, v) ->
                 m.put(v.getAge(), v.getName()), LinkedHashMap::putAll);
@@ -234,7 +235,35 @@ public class Java8Stream {
 
     }
 
+    /**
+     * list 中是map元素,根据map中的值来排序;
+     */
+    @Test
+    public void sortedMap() throws Exception{
+        String listStr="[{\"pageButton\":null,\"name\":\"全部空间(全部空间)\",\"spaceType\":\"SPT_ALL\",\"serial\":\"201908060000005\",\"area\":0.00,\"id\":\"2c94bf856c64a0fc016c64b816bd010d\",\"designId\":\"2c94bf856c41b2e4016c41df0f460000\"},{\"pageButton\":null,\"name\":\"主卧(卧室)\",\"spaceType\":\"SPT_BEDROOM\",\"serial\":\"201908060000001\",\"area\":0.00,\"id\":\"2c94bf856c64a0fc016c64b807ce0000\",\"designId\":\"2c94bf856c41b2e4016c41df0f460000\"},{\"pageButton\":null,\"name\":\"次卧1(卧室)\",\"spaceType\":\"SPT_BEDROOM\",\"serial\":\"201908060000002\",\"area\":0.00,\"id\":\"2c94bf856c64a0fc016c64b80cc80039\",\"designId\":\"2c94bf856c41b2e4016c41df0f460000\"},{\"pageButton\":null,\"name\":\"厨房(厨房)\",\"spaceType\":\"SPT_KITCHEN\",\"serial\":\"201908060000003\",\"area\":0.00,\"id\":\"2c94bf856c64a0fc016c64b80f210056\",\"designId\":\"2c94bf856c41b2e4016c41df0f460000\"},{\"pageButton\":null,\"name\":\"卫生间(卫生间)\",\"spaceType\":\"SPT_TOILET\",\"serial\":\"201908060000004\",\"area\":0.00,\"id\":\"2c94bf856c64a0fc016c64b812840081\",\"designId\":\"2c94bf856c41b2e4016c41df0f460000\"}]";
+        List<LinkedHashMap> list = new ObjectMapper().readValue(listStr,List.class);
+        System.out.println(list);
+        // 根据serial的值来排序
+       list.sort(Java8Stream::compartor);
+       Collections.sort(list,Java8Stream::compartor);
+        System.out.println(list);
 
+
+    }
+
+
+    public static int compartor(LinkedHashMap<String,Object> map1,LinkedHashMap<String,Object> map2){
+        if(map1==null&&map2==null){
+            return 0;
+        }
+        if(map1 ==null||map2==null){
+            throw  new NullPointerException();
+        }
+        String serial1=(String) map1.get("serial");
+        String serial2=(String) map2.get("serial");
+        return serial1.compareTo(serial2);
+
+    }
 }
 
 class Person{
