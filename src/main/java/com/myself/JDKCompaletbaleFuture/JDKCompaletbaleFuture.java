@@ -21,7 +21,7 @@ import java.util.concurrent.Executors;
  * 2. Runable和Callable的区别？ callable有返回值，Future<T> 只能submit提交去执行。
  *
  * 3. spring的Exceutor实现  ExecutorTask
- *      https://www.cnblogs.com/echoty/p/7070030.html
+ *     https://www.cnblogs.com/duanxz/p/9435343.html
  *
  *
  *  使用CompletableFuture构建异步应用
