@@ -3,8 +3,13 @@ package com.myself.threadLocal;
 
 /**
  * 并发编程：
- *  https://www.cnblogs.com/dolphin0520/p/3920407.html
+ * 1. https://www.cnblogs.com/dolphin0520/p/3920407.html
  *  深入解析 ThreadLocal
+ *
+ * 2. 线程池存储：https://www.cnblogs.com/qifenghao/p/8977378.html
+ *
+ * 3. 防止内存泄露：
+ *      https://blog.csdn.net/yanluandai1985/article/details/82590336
  */
 public class TestThreadLocal {
 
