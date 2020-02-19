@@ -183,6 +183,17 @@ public class Java8Stream {
 
 
     /**
+     * 合并流的办法：
+     *          flatMap()
+     *          Stream.contract()     http://www.leftso.com/blog/613.html
+     */
+    @Test
+    public void  operateStream(){
+
+
+    }
+
+    /**
      *  groupingBy: 分组
      *
      *  partitoningBy: 以什么为条件分割
