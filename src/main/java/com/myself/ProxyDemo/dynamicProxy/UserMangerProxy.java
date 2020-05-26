@@ -1,8 +1,13 @@
 package com.myself.ProxyDemo.dynamicProxy;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  *动态代理类只能代理接口（不支持抽象类），
@@ -57,8 +62,7 @@ public class UserMangerProxy  implements InvocationHandler {
     }
 
     public static void main(String[] args){
-        UserMangerProxy logHandler=new UserMangerProxy();
-        UserManager userManager=(UserManager)logHandler.newProxyInstance(new UserManagerImpl());
-        userManager.findUser();
+        List<String> list = new ArrayList<>();
+        System.out.println(StringUtils.join(list,","));
     }
 }

@@ -21,6 +21,8 @@ import java.util.stream.Stream;
  *      https://www.jianshu.com/p/0bb4daf6c800
  *
  *
+ * Collectors 收集器方法：https://blog.csdn.net/TreeShu321/article/details/100165535
+ *
  */
 public class Java8Stream {
 
@@ -206,6 +208,11 @@ public class Java8Stream {
         System.out.println("Adult number: " + children.get(false).size());
     }
 
+    public static void main(String[] args) {
+        String abc ="abc.123d.5564";
+        System.out.println(abc.substring(0,abc.lastIndexOf(".")));
+        System.out.println(abc.substring(abc.lastIndexOf(".")+1,abc.length()));
+    }
 
     /**
      * 测试Collectors.tomap();
@@ -219,20 +226,15 @@ public class Java8Stream {
     @Test
     public void listToMap(){
         List<Person> personList = Lists.newArrayList(
-                new Person(10,"zhang1"),
-                new Person(10,"zhang2"),
-                new Person(12,"zhang3"),
-                new Person(13,"zhang5"),
-                new Person(14,null)
+                new Person(10,"zhang1",1),
+                new Person(10,"zhang2",1),
+                new Person(10,"zhang3",2),
+                new Person(12,"zhang4",3),
+                new Person(13,"zhang5",4),
+                new Person(13,"zhang6",5)
         );
-
-        System.out.println(personList.stream().collect(Collectors.toMap(Person::getAge,Person::getName,(v1,v2)->v2)));// 对应key=10,v1= zhang1 v2=zhang2
-
-       LinkedHashMap memberMap = personList.stream().collect(LinkedHashMap::new, (m, v) ->
-                m.put(v.getAge(), v.getName()), LinkedHashMap::putAll);
-        System.out.println(memberMap);
-
-
+       Map collection = personList.stream().collect(Collectors.groupingBy(person -> person.getAge()+person.getRandom()));
+        System.out.println(collection);
     }
 
     /**
