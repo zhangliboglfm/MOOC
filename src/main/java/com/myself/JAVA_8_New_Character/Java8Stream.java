@@ -19,10 +19,6 @@ import java.util.stream.Stream;
  *
  * 简单快速的处理Stream()
  *      https://www.jianshu.com/p/0bb4daf6c800
- *
- *
- * Collectors 收集器方法：https://blog.csdn.net/TreeShu321/article/details/100165535
- *
  */
 public class Java8Stream {
 
@@ -35,6 +31,10 @@ public class Java8Stream {
      *  2. 从 BufferedReader
      *      java.io.BufferedReader.lines()
      *  3. 静态工厂
+ *
+ *
+ * Collectors 收集器方法：https://blog.csdn.net/TreeShu321/article/details/100165535
+ *
      *      java.util.stream.IntStream.range()
      *      java.nio.file.Files.walk()
      *  4. 自己构建
