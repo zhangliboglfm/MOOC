@@ -5,10 +5,17 @@ import com.myself.JAVA_8_New_Character.extraUtil.Car;
 import org.apache.coyote.http2.Stream;
 import org.junit.Test;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -72,7 +79,7 @@ public class java8NewCharacter {
         } );
 
         // computeIfAbsent  若key 对应的value不为空，会将第二个参数的返回值存入并返回
-        int key3 = linkedHashMap.computeIfPresent("ag1", (k,v) -> v+1);
+        int key3 = linkedHashMap.computeIfPresent("ag1", (k,v) ->  v+1);
         System.out.println(key3);
 
     }
@@ -343,4 +350,34 @@ public class java8NewCharacter {
                 .collect(Collectors.toList());
     }
 
+
+    @Test
+    public void  test1(){
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
+        System.out.println(sdf.format(date));
+        System.out.println(date.getTime());
+        System.out.println("-----------------------");
+        Instant instant = Instant.ofEpochMilli(date.getTime());
+        System.out.println(instant);
+        System.out.println(instant.getEpochSecond());
+        System.out.println(instant.toEpochMilli());
+        System.out.println("**********************");
+        ZonedDateTime zonedDateTime =instant.atZone(ZoneId.systemDefault());
+        Instant instant1 = zonedDateTime.toInstant();
+        System.out.println(instant1);
+        System.out.println(instant.getEpochSecond());
+        System.out.println(instant.toEpochMilli());
+        System.out.println("**********************");
+        LocalDateTime localDateTime = zonedDateTime.toLocalDateTime();
+        System.out.println(localDateTime);
+
+        System.out.println("===================");
+        System.out.println(ZoneId.getAvailableZoneIds());
+
+        System.out.println("++++++++++++++++++++++++++++++++++++++");
+        System.out.println(System.getenv());
+        Properties properties=System.getProperties();
+        System.out.println(123);
+    }
 }
