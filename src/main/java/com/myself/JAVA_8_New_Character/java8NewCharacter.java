@@ -380,4 +380,14 @@ public class java8NewCharacter {
         Properties properties=System.getProperties();
         System.out.println(123);
     }
+
+
+    @Test
+    public void test2(){
+
+        new Thread( () -> System.out.println("In Java8, There is Lambda expression!") ).start();
+
+
+    }
+
 }
