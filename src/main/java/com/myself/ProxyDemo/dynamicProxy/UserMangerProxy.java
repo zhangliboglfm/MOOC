@@ -1,7 +1,10 @@
 package com.myself.ProxyDemo.dynamicProxy;
 
 import org.apache.commons.lang3.StringUtils;
+import sun.misc.ProxyGenerator;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -62,7 +65,24 @@ public class UserMangerProxy  implements InvocationHandler {
     }
 
     public static void main(String[] args){
-        List<String> list = new ArrayList<>();
-        System.out.println(StringUtils.join(list,","));
+        // 保存生成动态代理的字节码文件方法：https://blog.csdn.net/qq_29956725/article/details/88891119
+
+        System.setProperty("sun.misc.ProxyGenerator.saveGeneratedFiles","true");
+        UserManagerImpl userManager = new UserManagerImpl();
+        UserManager userManagerProxy = (UserManager) new UserMangerProxy().newProxyInstance(userManager);
+        userManagerProxy.findUser();
+        while (true){
+
+        }
+
+//        byte [] proxies = ProxyGenerator.generateProxyClass("$Proxy0",new Class[]{UserManager.class});
+//        try {
+//            FileOutputStream userManagerProxy = new FileOutputStream("TestUserManagerProxy.class");
+//            userManagerProxy.write(proxies);
+//            userManagerProxy.flush();
+//            userManagerProxy.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 }
