@@ -30,11 +30,11 @@ public class TestVolative {
         ThreadDemo td = new ThreadDemo();
         td.start();
         while (true){
-            System.out.println("123");
-            synchronized (td){
+//            System.out.println("123");
+//            synchronized (td){
                 if(td.isFlag()){
                     break;
-                }
+//                }
             }
 
         }
