@@ -63,4 +63,11 @@ public class TestInputStream {
         }
     }
 
+    @Test
+    public void test3(){
+        File file =  new File("E:\\applog\\api-user\\info\\log-info-2020-07-06-0.log");
+
+    }
+
+
 }
