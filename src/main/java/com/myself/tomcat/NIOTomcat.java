@@ -20,10 +20,11 @@ public class NIOTomcat {
 
         // 1.新建NIO通道
         ServerSocketChannel ssc = ServerSocketChannel.open();
+        ssc.bind(new InetSocketAddress(8888));
         ssc.configureBlocking(false); // 设置为非阻塞状态
         ServerSocket serverSocket = ssc.socket();
         System.out.println("启动web服务");
-        serverSocket.bind(new InetSocketAddress(8888));
+//        serverSocket.bind(new InetSocketAddress(8888));
 
         while (true){
             SocketChannel channel = ssc.accept();
@@ -62,9 +63,11 @@ public class NIOTomcat {
                     ByteBuffer byteBuffer2 = ByteBuffer.allocate(1024);
                     // 给客户端一个响应，即向输出流写入信息
                     String reply = "HTTP/1.1\n"; // 必须添加的响应头
-                    reply += "Content-type:text/html\n\n"; // 必须添加的响应头
+                    reply += "Content-type:text/html;charset=UTF-8\n\n"; // 必须添加的响应头,此处设置的编码需要和返回的编码一样，如果不设置，默认为GBK
                     reply += "服务器返回的消息";
-                    byteBuffer2.put(new String(reply).getBytes("GBK"));
+                    // 对应 Content-type 处设置的编码，
+                    // 如果Content-type处不设置，浏览器解析模式为 GBK, 而我们系统模式的为UTF-8，会乱码
+                    byteBuffer2.put(reply.getBytes("utf-8"));
                     byteBuffer2.flip();
                     socketChannel.write(byteBuffer2);
                     socketChannel.close();
