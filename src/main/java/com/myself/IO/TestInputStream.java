@@ -68,6 +68,12 @@ public class TestInputStream {
         File file =  new File("E:\\applog\\api-user\\info\\log-info-2020-07-06-0.log");
 
     }
+    @Test
+    public void test4() throws IOException {
+      FileOutputStream fos = new FileOutputStream("");
+      new BufferedOutputStream(fos).flush();
+
+    }
 
 
 }
