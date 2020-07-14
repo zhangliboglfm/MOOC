@@ -6,10 +6,7 @@ import org.junit.Test;
 import org.springframework.messaging.handler.annotation.SendTo;
 
 import java.io.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -216,9 +213,79 @@ public class TestInputStream {
 
     @Test
     public void test9(){
-        System.out.println(System.getProperty("line.separator"));
-        System.out.println(System.getProperty("path.separator"));
-        System.out.println(System.getProperty("file.separator"));
-        System.out.println(File.separator);
+//        System.out.println(System.getProperty("line.separator"));
+//        System.out.println(System.getProperty("path.separator"));
+//        System.out.println(System.getProperty("file.separator"));
+//        System.out.println(File.separator);
+        int cap =9;
+        int n = cap - 1;
+        n |= n >>> 1;
+        n |= n >>> 2;
+        n |= n >>> 4;
+        n |= n >>> 8;
+        n |= n >>> 16;;
+        System.out.println(n);
+    }
+
+    @Test
+    public void test10(){
+       LinkedHashMap map = new LinkedHashMap<String, String>(10, 0.75f, true);
+        map.put("1", "a");
+        map.put("2", "b");
+        map.put("3", "c");
+        map.put("4", "d");
+        map.get("2");//2移动到了内部的链表末尾
+        map.get("4");//4调整至末尾
+        map.put("3", "e");//3调整至末尾
+        map.put(null, null);//插入两个新的节点 null
+        map.put("5", null);//5
+        Iterator  iterator = map.entrySet().iterator();
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+        }
+    }
+
+
+}
+
+class A {
+
+    private int num;
+    private String name;
+
+
+    public A(int num, String name) {
+        this.num = num;
+        this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        A a = (A) o;
+        return num == a.num &&
+                Objects.equals(name, a.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(num);
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
