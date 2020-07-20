@@ -18,7 +18,7 @@ import java.util.concurrent.locks.StampedLock;
  * 同步锁  LOCK  显示锁
  * 通过lock() 方法上锁，通过unlock() 方法解锁   unlock 放在finally代码块中。
  * <p>
- * ReentranReadWriteLock  && StampedLock :
+ * ReentranReadWriteLock  && StampedLock :https://www.cnblogs.com/zxporz/p/11642176.html
  */
 public class TestLock {
     static ExecutorService service = Executors.newFixedThreadPool(10);
