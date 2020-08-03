@@ -78,7 +78,7 @@ public class java8NewCharacter {
             return 4;
         } );
 
-        // computeIfAbsent  若key 对应的value不为空，会将第二个参数的返回值存入并返回
+        // computeIfPresent  若key 对应的value不为空，会将第二个参数的返回值存入并返回
         int key3 = linkedHashMap.computeIfPresent("ag1", (k,v) ->  v+1);
         System.out.println(key3);
 
