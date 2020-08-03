@@ -1,9 +1,22 @@
 package com.myself.JAVA_8_New_Character;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import sun.misc.Unsafe;
+
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.SimpleBindings;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.text.DecimalFormat;
+import java.util.LinkedHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicStampedReference;
 
+/**
+ * https://www.jianshu.com/p/2a48778871a9
+ */
 public class ABA {
 
     private static AtomicInteger atomicInt = new AtomicInteger(100);
@@ -46,30 +59,16 @@ public class ABA {
                     e.printStackTrace();
                 }
                 atomicStampedRef.compareAndSet(100, 101,
-                        atomicStampedRef.getStamp(), atomicStampedRef.getStamp()+1);
+                        atomicStampedRef.getStamp(), atomicStampedRef.getStamp() + 1);
                 atomicStampedRef.compareAndSet(101, 100,
-                        atomicStampedRef.getStamp(), atomicStampedRef.getStamp()+1);
+                        atomicStampedRef.getStamp(), atomicStampedRef.getStamp() + 1);
             }
         });
 
-        Thread refT2 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int stamp = atomicStampedRef.getStamp();
-                System.out.println("before sleep : stamp = " + stamp);    // stamp = 0
-                try {
-                    TimeUnit.SECONDS.sleep(2);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                System.out.println("after sleep : stamp = " + atomicStampedRef.getStamp());//stamp = 1
-                boolean c3 = atomicStampedRef.compareAndSet(100, 101, stamp, stamp+1);
-                System.out.println(c3);        //false
-            }
-        });
+    }
 
-        refT1.start();
-        refT2.start();
+    public static void changeStr(String str){
+        str = new String("137878");
     }
 
 }
